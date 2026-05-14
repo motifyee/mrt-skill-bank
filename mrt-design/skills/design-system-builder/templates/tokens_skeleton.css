@@ -1,0 +1,252 @@
+/* ==========================================================================
+   Design System Tokens - [BRAND NAME]
+   Generated: [DATE]
+   Version: [VERSION]
+
+   This skeleton mirrors schemas/token_schema.md. Keep names aligned with the
+   schema so dashboard, preview, and UI-kit agents share one token contract.
+   ========================================================================== */
+
+/* === RAW TOKENS === */
+/* Base values. Raw tokens may contain literal color values. */
+
+:root {
+  /* Color - raw palette */
+  --neutral-900: ;
+  --neutral-800: ;
+  --neutral-700: ;
+  --neutral-600: ;
+  --neutral-500: ;
+  --neutral-400: ;
+  --neutral-300: ;
+  --neutral-200: ;
+  --neutral-100: ;
+  --neutral-50: ;
+
+  --line-color: ;
+  --line-strong: ;
+  --line-dark: ;
+
+  --accent-raw: ;
+  --accent-hover-raw: ;
+  --accent-press-raw: ;
+  --accent-tint-raw: ;
+  --accent-deep-raw: ;
+
+  --success: ;
+  --warning: ;
+  --error: ;
+  --info: ;
+
+  /* Type - families */
+  /* Selected from language/script strategy + brand-value rationale. */
+  --font-display: ;
+  --font-body: ;
+  --font-mono: ;
+
+  /* Type - scale */
+  --fs-display: ;
+  --fs-h1: ;
+  --fs-h2: ;
+  --fs-h3: ;
+  --fs-h4: ;
+  --fs-body-lg: ;
+  --fs-body: ;
+  --fs-body-sm: ;
+  --fs-label: ;
+  --fs-mono: ;
+
+  /* Type - metrics */
+  --lh-display: ;
+  --lh-heading: ;
+  --lh-body: ;
+  --lh-body-sm: ;
+  --lh-label: ;
+  --tracking-display: ;
+  --tracking-heading: ;
+  --tracking-body: ;
+  --tracking-label: ;
+  --fw-regular: ;
+  --fw-medium: ;
+  --fw-semibold: ;
+  --fw-bold: ;
+
+  /* Spacing */
+  --space-1: ;
+  --space-2: ;
+  --space-3: ;
+  --space-4: ;
+  --space-5: ;
+  --space-6: ;
+  --space-7: ;
+  --space-8: ;
+  --space-9: ;
+  --space-10: ;
+
+  /* Layout */
+  --container-max: ;
+  --nav-height: ;
+  --nav-height-sm: ;
+  --touch-target: ;
+
+  /* Shape */
+  --radius-sm: ;
+  --radius-md: ;
+  --radius-lg: ;
+  --radius-xl: ;
+  --radius-full: ;
+
+  /* Elevation */
+  --shadow-sm: ;
+  --shadow-md: ;
+  --shadow-lg: ;
+  --shadow-accent: ;
+
+  /* Motion */
+  --ease: ;
+  --dur-fast: ;
+  --dur-base: ;
+  --dur-slow: ;
+}
+
+/* === SEMANTIC TOKENS === */
+/* Role-based aliases. Components should reference this layer or component tokens. */
+
+:root {
+  --bg: ;
+  --bg-alt: ;
+  --bg-inset: ;
+  --bg-inverse: ;
+  --bg-inverse-alt: ;
+
+  --fg: ;
+  --fg-muted: ;
+  --fg-subtle: ;
+  --fg-on-dark: ;
+  --fg-on-dark-muted: ;
+
+  --accent: ;
+  --accent-hover: ;
+  --accent-press: ;
+  --accent-tint: ;
+  --on-accent: ;
+
+  --border: ;
+  --border-strong: ;
+  --border-dark: ;
+  --focus-ring: ;
+
+  --success-tint: ;
+  --warning-tint: ;
+  --error-tint: ;
+  --info-tint: ;
+}
+
+/* === COMPONENT TOKENS === */
+/* Component tokens must reference semantic tokens, never raw hex values. */
+
+:root {
+  --btn-primary-bg: ;
+  --btn-primary-fg: ;
+  --btn-secondary-bg: ;
+  --btn-secondary-fg: ;
+  --btn-border: ;
+  --btn-radius: ;
+  --btn-shadow: ;
+  --btn-padding-block: ;
+  --btn-padding-inline: ;
+
+  --card-bg: ;
+  --card-border: ;
+  --card-radius: ;
+  --card-shadow: ;
+  --card-padding: ;
+
+  --input-bg: ;
+  --input-border: ;
+  --input-radius: ;
+  --input-padding-block: ;
+  --input-padding-inline: ;
+  --input-focus-ring: ;
+
+  --badge-bg: ;
+  --badge-fg: ;
+  --badge-radius: ;
+  --badge-padding-block: ;
+  --badge-padding-inline: ;
+}
+
+/* === DENSITY === */
+
+:root {
+  --density-scale: 1;
+}
+
+[data-density="compact"] {
+  --density-scale: 0.75;
+  --touch-target: 36px;
+}
+
+[data-density="spacious"] {
+  --density-scale: 1.25;
+  --touch-target: 52px;
+}
+
+/* === DARK MODE === */
+
+[data-theme="dark"] {
+  --bg: ;
+  --bg-alt: ;
+  --bg-inset: ;
+  --bg-inverse: ;
+  --fg: ;
+  --fg-muted: ;
+  --fg-subtle: ;
+  --accent: ;
+  --accent-hover: ;
+  --accent-press: ;
+  --accent-tint: ;
+  --on-accent: ;
+  --border: ;
+  --border-strong: ;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --bg: ;
+    --bg-alt: ;
+    --fg: ;
+    --fg-muted: ;
+    --accent: ;
+    --border: ;
+  }
+}
+
+/* === BASE STYLES === */
+
+html {
+  color-scheme: light dark;
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--fg);
+}
+
+body {
+  margin: 0;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

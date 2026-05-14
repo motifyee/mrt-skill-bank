@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>[BRAND] - Design System</title>
+  <link rel="stylesheet" href="tokens.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: calc(var(--nav-height, 72px) + var(--space-4, 16px));
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--fg);
+      line-height: var(--lh-body);
+    }
+
+    .topbar {
+      position: sticky;
+      inset-block-start: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: var(--nav-height, 72px);
+      padding: var(--space-3, 12px) var(--space-5, 24px);
+      background: color-mix(in oklab, var(--bg) 92%, transparent);
+      border-block-end: 1px solid var(--border);
+      backdrop-filter: blur(16px);
+    }
+
+    .brand-lockup {
+      display: grid;
+      gap: var(--space-1, 4px);
+    }
+
+    .brand-lockup strong {
+      font-family: var(--font-display);
+      font-size: var(--fs-h4);
+      line-height: var(--lh-heading);
+    }
+
+    .brand-lockup span {
+      color: var(--fg-muted);
+      font-size: var(--fs-body-sm);
+    }
+
+    .shell {
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      gap: var(--space-7, 48px);
+      width: min(100%, var(--container-max, 1280px));
+      margin-inline: auto;
+      padding: var(--space-6, 32px) var(--space-5, 24px) var(--space-10, 128px);
+    }
+
+    .sidebar {
+      position: sticky;
+      inset-block-start: calc(var(--nav-height, 72px) + var(--space-5, 24px));
+      align-self: start;
+      max-height: calc(100vh - var(--nav-height, 72px) - var(--space-8, 64px));
+      overflow: auto;
+      padding: var(--space-4, 16px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: var(--bg-alt);
+    }
+
+    .sidebar a {
+      display: block;
+      padding: var(--space-2, 8px) var(--space-3, 12px);
+      color: var(--fg-muted);
+      text-decoration: none;
+      border-radius: var(--radius-sm);
+      font-size: var(--fs-body-sm);
+    }
+
+    .sidebar a[aria-current="true"],
+    .sidebar a:hover,
+    .sidebar a:focus-visible {
+      color: var(--fg);
+      background: var(--accent-tint);
+    }
+
+    main {
+      display: grid;
+      gap: var(--space-8, 64px);
+      min-width: 0;
+    }
+
+    section {
+      padding: var(--space-6, 32px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      background: var(--bg);
+      box-shadow: var(--shadow-sm);
+    }
+
+    section > h2 {
+      margin: 0 0 var(--space-4, 16px);
+      font-family: var(--font-display);
+      font-size: var(--fs-h2);
+      line-height: var(--lh-heading);
+      letter-spacing: var(--tracking-heading);
+    }
+
+    .section-note {
+      max-width: 72ch;
+      margin: 0 0 var(--space-5, 24px);
+      color: var(--fg-muted);
+    }
+
+    .swatch-grid,
+    .specimen-grid,
+    .component-grid,
+    .link-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: var(--space-4, 16px);
+    }
+
+    .placeholder-card {
+      min-height: 120px;
+      padding: var(--space-4, 16px);
+      border: 1px dashed var(--border-strong);
+      border-radius: var(--radius-md);
+      color: var(--fg-muted);
+      background: var(--bg-alt);
+    }
+
+    .theme-toggle,
+    .menu-toggle {
+      min-height: var(--touch-target, 44px);
+      padding: var(--space-2, 8px) var(--space-4, 16px);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      background: var(--btn-primary-bg, var(--accent));
+      color: var(--btn-primary-fg, var(--on-accent));
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .menu-toggle { display: none; }
+
+    @media (max-width: 860px) {
+      .topbar { gap: var(--space-3, 12px); }
+      .menu-toggle { display: inline-flex; align-items: center; }
+      .shell { grid-template-columns: 1fr; padding-block-start: var(--space-4, 16px); }
+      .sidebar {
+        position: static;
+        display: none;
+        max-height: none;
+      }
+      .sidebar[data-open="true"] { display: block; }
+      section { padding: var(--space-5, 24px); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+    }
+
+    /*
+     * SECTION VARIANT GUIDANCE
+     * Do not use the same bordered-panel treatment for every section.
+     * Section appearance must be derived from the design system's:
+     *   1. signature_dna  — what visual mark to propagate
+     *   2. density_tier   — how much spacing/breathing room
+     *   3. neutral family — warm/cool undertone for bg alternation
+     *
+     * Variant classes to apply per-section (Agent B chooses):
+     *
+     * .section--default    = bordered card (current <section> style above)
+     * .section--flat       = no border, no shadow; uses bg alternation only
+     * .section--highlight  = accent-tinted background, no border; for signature-moment sections
+     * .section--inset      = padded inset with bg-alt background; for data/specimen sections
+     * .section--full-bleed = no padding/margin, spans full width; for color/gradient swatches
+     *
+     * Each design system should apply 2-3 variants across its sections,
+     * never the same panel treatment for all 14 sections.
+     */
+    .section--flat { border: none; box-shadow: none; background: var(--bg-alt); }
+    .section--highlight { border: none; box-shadow: none; background: var(--accent-tint); }
+    .section--inset { border: none; box-shadow: none; background: var(--bg-alt); border-radius: var(--radius-lg); }
+    .section--full-bleed { padding: 0; border: none; box-shadow: none; border-radius: 0; margin-inline: calc(-1 * var(--space-5, 24px)); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <button class="menu-toggle" type="button" aria-controls="dashboard-nav" aria-expanded="false">Menu</button>
+    <div class="brand-lockup">
+      <strong>[BRAND] Design System</strong>
+      <span>Version [VERSION] - [DATE]</span>
+    </div>
+    <button class="theme-toggle" type="button">Toggle theme</button>
+  </header>
+
+  <div class="shell">
+    <nav class="sidebar" id="dashboard-nav" aria-label="Design system sections">
+      <a href="#overview" aria-current="true">Overview</a>
+      <a href="#color">Color</a>
+      <a href="#typography">Typography</a>
+      <a href="#spacing">Spacing</a>
+      <a href="#radii">Radii</a>
+      <a href="#shadows">Shadows</a>
+      <a href="#iconography">Iconography</a>
+      <a href="#buttons">Buttons</a>
+      <a href="#cards">Cards</a>
+      <a href="#forms">Forms</a>
+      <a href="#badges">Badges</a>
+      <a href="#navigation">Navigation</a>
+      <a href="#logo">Logo</a>
+      <a href="#ui-kits">UI kits</a>
+    </nav>
+
+    <main>
+      <section id="overview" data-section>
+        <h2>Overview</h2>
+        <p class="section-note"><!-- Agent fills: brand essence, fonts, icon set, grid, version, signature moment. --></p>
+        <div class="specimen-grid"><div class="placeholder-card">System metadata</div></div>
+      </section>
+
+      <section id="color" data-section>
+        <h2>Color</h2>
+        <p class="section-note"><!-- Agent fills: palette strategy, contrast notes, theme behavior. --></p>
+        <div class="swatch-grid"><!-- Agent fills: all token swatches with token names and hex values. --></div>
+      </section>
+
+      <section id="typography" data-section>
+        <h2>Typography</h2>
+        <div class="specimen-grid"><!-- Agent fills: display through mono specimens with metrics. --></div>
+      </section>
+
+      <section id="spacing" data-section><h2>Spacing</h2><div class="specimen-grid"><!-- Agent fills. --></div></section>
+      <section id="radii" data-section><h2>Radii</h2><div class="specimen-grid"><!-- Agent fills. --></div></section>
+      <section id="shadows" data-section><h2>Shadows</h2><div class="specimen-grid"><!-- Agent fills. --></div></section>
+      <section id="iconography" data-section><h2>Iconography</h2><div class="specimen-grid"><!-- Agent fills. --></div></section>
+      <section id="buttons" data-section><h2>Buttons</h2><div class="component-grid"><!-- Agent fills variants and states. --></div></section>
+      <section id="cards" data-section><h2>Cards</h2><div class="component-grid"><!-- Agent fills variants and states. --></div></section>
+      <section id="forms" data-section><h2>Forms</h2><div class="component-grid"><!-- Agent fills input, helper, error, focus states. --></div></section>
+      <section id="badges" data-section><h2>Badges</h2><div class="component-grid"><!-- Agent fills variants. --></div></section>
+      <section id="navigation" data-section><h2>Navigation</h2><div class="component-grid"><!-- Agent fills desktop and mobile nav. --></div></section>
+      <section id="logo" data-section><h2>Logo</h2><div class="component-grid"><!-- Agent fills lockups or substitution flags. --></div></section>
+      <section id="ui-kits" data-section><h2>UI kits</h2><div class="link-grid"><!-- Agent fills prototype links. --></div></section>
+    </main>
+  </div>
+
+  <script>
+    const nav = document.querySelector('#dashboard-nav');
+    const links = Array.from(nav.querySelectorAll('a'));
+    const sections = links.map((link) => document.querySelector(link.getAttribute('href'))).filter(Boolean);
+
+    document.querySelector('.theme-toggle').addEventListener('click', () => {
+      const root = document.documentElement;
+      root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    });
+
+    document.querySelector('.menu-toggle').addEventListener('click', (event) => {
+      const isOpen = nav.dataset.open === 'true';
+      nav.dataset.open = String(!isOpen);
+      event.currentTarget.setAttribute('aria-expanded', String(!isOpen));
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (!visible) return;
+      links.forEach((link) => link.removeAttribute('aria-current'));
+      const active = links.find((link) => link.getAttribute('href') === `#${visible.target.id}`);
+      if (active) active.setAttribute('aria-current', 'true');
+    }, { rootMargin: '-20% 0px -65% 0px', threshold: [0.1, 0.3, 0.6] });
+
+    sections.forEach((section) => observer.observe(section));
+  </script>
+</body>
+</html>

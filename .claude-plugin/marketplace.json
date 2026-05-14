@@ -1,0 +1,48 @@
+{
+	"$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+	"name": "mrt-skill-bank",
+	"description": "Directory of my local Claude Code extensions including development tools, productivity plugins, and MCP integrations",
+	"owner": {
+		"name": "mrt",
+		"email": "info@bitrails.dev"
+	},
+	"plugins": [
+		{
+			"name": "gsd",
+			"description": "",
+			"author": {
+				"name": "GSD"
+			},
+			"category": "Productivity",
+			"source": "./gsd"
+		},
+		{
+			"name": "mattpocock-skills",
+			"description": "",
+			"author": {
+				"name": "mattpocock"
+			},
+			"category": "design",
+			"source": "./mattpocock"
+		},
+		{
+			"name": "mrt-design",
+			"description": "",
+			"category": "productivity",
+			"source": "./mrt-design"
+		},
+
+		{
+			"name": "mrt-prompt",
+			"description": "",
+			"category": "productivity",
+			"source": "./mrt-prompt"
+		},
+		{
+			"name": "mrt-misc",
+			"description": "",
+			"category": "productivity",
+			"source": "./mrt-misc"
+		}
+	]
+}
